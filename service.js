@@ -10,14 +10,16 @@ router.get('/new',(req,res)=>{
 })
 
 router.post('/',(req,res)=>{
-  service.push({id:req.body.id,name:req.body.name,cost:req.body.cost})
+  service.push({duration:req.body.duration,name:req.body.name,cost:req.body.cost})
   res.redirect(`/service/${service.length-1}`)
 })
 
 router.get('/:id',(req,res)=>{
 
   if(req.params.id<service.length){
-    res.send(`Service Id:${req.services.id} , Service Name:${req.services.name} , Service Cost:${req.services.cost}`)
+    console.log(req.services.duration);
+    res.send(`  Service Name:${req.services.name} ,Service Duration:${req.services.duration}, Service Cost:${req.services.cost}`)
+    //res.json(service)
   }
   else{
     res.send("Service Not Found")
@@ -28,22 +30,22 @@ router.get('/:id',(req,res)=>{
 
 const service=[
   {
-    id:0,
+    duration:10,
     name:'App development'
     ,cost:1000
   },
   {
-    id:1,
+    duration:12,
     name:'Web development'
     ,cost:1001
   },
   {
-    id:2,
+    duration:21,
     name:'Iot development'
     ,cost:1003
   },
   {
-    id:3,
+    duration:13,
     name:'Embedded system'
     ,cost:1004
   }
