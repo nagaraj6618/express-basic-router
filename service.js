@@ -5,13 +5,12 @@ router.get('/',(req,res)=>{
 })
 
 router.get('/:id',(req,res)=>{
-const pageId=Number(req.params.id);
-  const serviceId=service.find((ser)=>ser.id===pageId);
-  if(!serviceId){
-    res.send("Service Not Found")
+
+  if(req.params.id<service.length){
+    res.send(req.services.name)
   }
   else{
-    res.json(service[pageId])
+    res.send("Service Not Found")
   }
 })
 const service=[
@@ -33,4 +32,8 @@ const service=[
 
   }
 ]
+router.param('id',(req,res,next,id)=>{
+  req.services=service[id];
+  next();
+})
 module.exports=router;

@@ -5,23 +5,14 @@ router.get('/',(req,res)=>{
 })
 
 router.get('/:id([0-9])',(req,res)=>{
-const pageId=Number(req.params.id)
-const userId=users.find((user)=>(user.idno-1)===pageId)
-
-if(!userId){
-  res.send('Page Not Found')
+// res.json(req.user)
+if(req.params.id<users.length){
+res.send(req.user.name)
 }
+ 
 else{
-  res.json(users[req.params.id])
+  res.send("Page Not Found")
 }
-  // if(req.params.id<=UsersArrayLength){
-  //   res.json(users[req.params.id-1])
-  //  res.send(`User Name for this id ${users[req.params.id-1].idno} is ${users[req.params.id-1].name}`)
-  // }
-  // else{
-  //   res.send("Wrong id")
-  // }
-  // // res.send(`List of Users ${req.params.id}`)
 })
 
 
@@ -40,7 +31,15 @@ const users=[{
 {
   idno:4,
   name:'Trisha'
+},
+{
+  idno:5,
+  name:"Navya"
 }]
 
+router.param('id',(req,res,next,id)=>{
+ req.user=users[id-1]
+ next();
+})
 // const UsersArrayLength=users.length;
 module.exports=router;
