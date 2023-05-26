@@ -84,4 +84,4 @@ router.param('id',(req,res,next,id)=>{
   req.services=service[id];
   next();
 })
-module.exports=router
+module.exports=router;
