@@ -39,9 +39,10 @@ router.get('/new',(req,res)=>{
 
 router.post('/',(req,res)=>{
   service.push({duration:req.body.duration,name:req.body.name,cost:req.body.cost})
+  res.status(200).json(service)
   //res.redirect(`/service/${service.length-1}`)
   res.redirect(`http://localhost:3000/Service/${service.length}`)
-  res.json(service)
+  
 })
 
 router.get('/:id',(req,res)=>{
@@ -57,10 +58,30 @@ router.get('/:id',(req,res)=>{
   }
 })
 
+router.put('/:id',(req,res)=>{
+  const id=req.params.id;
+  if(id>service.length){
+    res.status(404).json({status:false,message:"User not found"})
+  }
+  else{
+    service[(id-1)]={duration:req.body.duration,name:req.body.name,cost:req.body.cost}
+  }
+  res.status(200).json({status:true,data:service})
+})
 
+router.delete('/:id',(req,res)=>{
+  const id=req.params.id;
+  if(id>service.length){
+    res.status(404).json({status:false,message:"User not found"})
+  }
+
+  service.splice((id-1),1);
+  res.status(200).json({status:true,data:service})
+
+})
 
 router.param('id',(req,res,next,id)=>{
   req.services=service[id];
   next();
 })
-module.exports=router;
+module.exports=router
